@@ -62,44 +62,29 @@
   </dependencies>
 
   <build>
-    <resources>
-      <resource>
-        <directory>src/main/resources</directory>
-        <includes>
-          <include>**/*</include>
-        </includes>
-      </resource>
-      <resource>
-        <directory>src/main/java</directory>
-        <includes>
-          <include>**/*.xml</include>
-        </includes>
-      </resource>
-    </resources>
-
     <plugins>
       <plugin>
-        <groupId>org.apache.maven.plugins</groupId>
-        <artifactId>maven-compiler-plugin</artifactId>
-        <version>3.8.1</version>
+        <artifactId>maven-assembly-plugin</artifactId>
+        <version>3.3.0</version> <!-- 使用合适的版本 -->
         <configuration>
-          <source>11</source>
-          <target>11</target>
-          <encoding>UTF-8</encoding>
-          <verbose>true</verbose>
-          <showWarnings>true</showWarnings>
-          <fork>true</fork><!-- 要使compilerVersion标签生效，还需要将fork设为true，用于明确表示编译版本配置的可用 -->
-          <compilerVersion>11</compilerVersion><!-- 指定插件将使用的编译器的版本 -->
-          <skip>false</skip>
+          <descriptorRefs>
+            <descriptorRef>jar-with-dependencies</descriptorRef>
+          </descriptorRefs>
+          <archive>
+            <manifest>
+              <mainClass>cn.edu.fudan.violationtracker.ViolationMatchApplication</mainClass>
+            </manifest>
+          </archive>
         </configuration>
-      </plugin>
-      <plugin>
-        <groupId>org.springframework.boot</groupId>
-        <artifactId>spring-boot-maven-plugin</artifactId>
-        <configuration>
-          <includeSystemScope>true</includeSystemScope>
-          <mainClass>cn.edu.fudan.violationtracker.ViolationMatchApplication</mainClass>
-        </configuration>
+        <executions>
+          <execution>
+            <id>make-assembly</id>
+            <phase>package</phase>
+            <goals>
+              <goal>single</goal>
+            </goals>
+          </execution>
+        </executions>
       </plugin>
     </plugins>
   </build>
